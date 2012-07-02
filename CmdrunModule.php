@@ -44,10 +44,27 @@ class CmdrunModule extends CWebModule
 			'cmdrun.components.*',
 		));
         
-        $this->_config = include Yii::getPathOfAlias($this->configPathAlias) . '.php';
+        $this->_config = $this->_readConfig();
         
         $this->_initRunner();
 	}
+    
+    /**
+     * Reads console application config and adds default values
+     * @return array console application config
+     */
+    private function _readConfig()
+    {
+        $config = include Yii::getPathOfAlias($this->configPathAlias) . '.php';
+        
+        // Setting dafaults
+        $config += array(
+            'commandMap' => array(),
+            'commandPath' => 'protected/commands',
+        );
+        
+        return $config;
+    }
 
     private function _initRunner()
     {
