@@ -1,21 +1,41 @@
 <?php
 
+/**
+ * @property-read array $config console application config
+ */
 class CmdrunModule extends CWebModule
 {
+    /**
+     * Run module only if Yii application running in DEBUG MODE.
+     * Defaults to true.
+     * @var boolean
+     */
+    public $onlyInDebug = true;
+    
+    /**
+     * Console application config path alias.
+     * Defaults to "application.config.console".
+     * @var string 
+     */
+    public $configPathAlias = 'application.config.console';
+
+    
     /**
      * @var CConsoleCommandRunner 
      */
     public $runner;
     
     /**
-     * @var array console application config
+     * Console application config.
+     * Use property "config" instead
+     * @var array
      */
-    public $config;
+    private $_config;
 
     public function init()
 	{
         // This module is for debug only
-        if (!YII_DEBUG)
+        if ( $this->onlyInDebug && !YII_DEBUG )
             throw new CHttpException(403);
         
 		// import the module-level models and components
@@ -24,7 +44,7 @@ class CmdrunModule extends CWebModule
 			'cmdrun.components.*',
 		));
         
-        $this->config = include Yii::getPathOfAlias('application.config.console') . '.php';
+        $this->_config = include Yii::getPathOfAlias($this->configPathAlias) . '.php';
         
         $this->_initRunner();
 	}
@@ -57,4 +77,16 @@ class CmdrunModule extends CWebModule
 		else
 			return false;
 	}
+    
+    
+    /* Getters */
+    
+    /**
+     * @return array console application config
+     */
+    public function getConfig()
+    {
+        return $this->_config;
+    }
+    
 }
