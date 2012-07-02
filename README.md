@@ -1,7 +1,7 @@
 Cmdrun
 ==========
 
-Yii module to run non-interactive yiic commands using http
+Yii module to run non-interactive yiic commands using http requests.
 
 Install
 =======
