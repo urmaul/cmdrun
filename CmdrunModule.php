@@ -33,21 +33,21 @@ class CmdrunModule extends CWebModule
     private $_config;
 
     public function init()
-	{
+    {
         // This module is for debug only
         if ( $this->onlyInDebug && !YII_DEBUG )
             throw new CHttpException(403);
         
 		// import the module-level models and components
-		$this->setImport(array(
-			'cmdrun.models.*',
-			'cmdrun.components.*',
-		));
+        $this->setImport(array(
+            'cmdrun.models.*',
+            'cmdrun.components.*',
+        ));
         
         $this->_config = $this->_readConfig();
         
         $this->_initRunner();
-	}
+    }
     
     /**
      * Reads console application config and adds default values
@@ -84,16 +84,16 @@ class CmdrunModule extends CWebModule
     }
 
     public function beforeControllerAction($controller, $action)
-	{
-		if(parent::beforeControllerAction($controller, $action))
-		{
-			// this method is called before any module controller action is performed
-			// you may place customized code here
-			return true;
-		}
-		else
-			return false;
-	}
+    {
+        if(parent::beforeControllerAction($controller, $action))
+        {
+            // this method is called before any module controller action is performed
+            // you may place customized code here
+            return true;
+        }
+        else
+            return false;
+    }
     
     
     /* Getters */
