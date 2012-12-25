@@ -14,9 +14,11 @@ class DefaultController extends Controller
     }
 
 
-    public function actionRun($name, $attrs = array())
+    public function actionRun($name)
     {
         $this->showCommands();
+        
+        $attrs = @$_SERVER['QUERY_STRING'];
         
         echo
             '<style>' .
@@ -24,12 +26,14 @@ class DefaultController extends Controller
             '</style>' .
             '<h2>How to call</h2>' .
             '<pre>' .
-                Yii::getPathOfAlias('application.yiic') . ' ' . $name . (empty($attrs) ? '' : ' ' . implode(' ', $attrs)) .
+                Yii::getPathOfAlias('application.yiic') . ' ' . $name . (empty($attrs) ? '' : ' ' . $attrs) .
             '</pre>' .
             '<h2>Output</h2>' .
             '<pre>';
         
-        $this->runner->run(array('', $name) + $attrs);
+        $params = array_merge(array('', $name), explode(' ', $attrs));
+        
+        $this->runner->run($params);
         
         echo
             '</pre>';

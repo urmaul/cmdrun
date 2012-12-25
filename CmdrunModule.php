@@ -96,7 +96,7 @@ class CmdrunModule extends CWebModule
     }
     
     
-    /* Getters */
+    # Getters #
     
     /**
      * @return array console application config
