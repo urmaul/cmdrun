@@ -5,7 +5,7 @@
  * 
  * @property-read CConsoleCommandRunner $runner
  */
-class DefaultController extends Controller
+class DefaultController extends CController
 {
     
     public function actionIndex()
@@ -18,7 +18,8 @@ class DefaultController extends Controller
     {
         $this->showCommands();
         
-        $attrs = @$_SERVER['QUERY_STRING'];
+        $query = strstr($_SERVER['REQUEST_URI'], '?');
+        $attrs = $query !== false ? substr($query, 1) : '';
         
         echo
             '<style>' .
@@ -33,7 +34,11 @@ class DefaultController extends Controller
         
         $params = array_merge(array('', $name), explode(' ', $attrs));
         
+        ob_start();
         $this->runner->run($params);
+        $output = ob_get_clean();
+        
+        echo htmlentities($output);
         
         echo
             '</pre>';

@@ -38,13 +38,7 @@ class CmdrunModule extends CWebModule
         if ( $this->onlyInDebug && !YII_DEBUG )
             throw new CHttpException(403);
         
-		// import the module-level models and components
-        $this->setImport(array(
-            'cmdrun.models.*',
-            'cmdrun.components.*',
-        ));
-        
-        $this->_config = $this->_readConfig();
+		$this->_config = $this->_readConfig();
         
         $this->_initRunner();
     }
